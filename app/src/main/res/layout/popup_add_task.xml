@@ -1,0 +1,53 @@
+<!-- res/layout/popup_add_task.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_bg"
+    android:backgroundTintMode="screen"
+    android:padding="20dp"
+    android:layout_gravity="center">
+
+    <EditText
+        android:id="@+id/etTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/hint_text_for_add_title"
+        android:textColor="#000000"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#DDDDDD"
+        android:textColorHint="#888888"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/etTaskDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/hint_text_for_task_details"
+        android:textColor="#000000"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:layout_below="@id/etTaskTitle"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#DDDDDD"
+        android:textColorHint="#888888"
+        tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/btnSaveTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:layout_below="@+id/etTaskDescription"
+        android:layout_alignParentEnd="true"
+        android:backgroundTint="@color/primaryColor"
+        android:textColor="@android:color/white"
+        tools:ignore="HardcodedText" />
+</RelativeLayout>

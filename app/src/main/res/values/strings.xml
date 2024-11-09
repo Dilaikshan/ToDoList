@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="back">Back Button</string>
+    <string name="addBtnDescription">Add Task</string>
+    <string name="emptyTaskAlert">No Task added</string>
+    <string name="task_title">Task Title</string>
+    <string name="task_body_view">Body of Task...</string>
+    <string name="hint_text_for_add_title">Enter Task Title</string>
+    <string name="hint_text_for_task_details">Enter Task Description</string>
+    <string name="hint_date">Last edited: 01/01/2024</string>
+
+</resources>
