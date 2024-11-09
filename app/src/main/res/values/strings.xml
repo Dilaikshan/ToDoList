@@ -8,5 +8,11 @@
     <string name="hint_text_for_add_title">Enter Task Title</string>
     <string name="hint_text_for_task_details">Enter Task Description</string>
     <string name="hint_date">Last edited: 01/01/2024</string>
+    <string-array name="priority_levels">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
 
 </resources>

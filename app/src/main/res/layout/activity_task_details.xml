@@ -58,6 +58,14 @@
         android:layout_below="@id/etTaskDetails"
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"/>
+    <Spinner
+        android:id="@+id/spinnerPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/tvLastEdited"
+        android:layout_below="@+id/etTaskDetails"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabDeleteTask"

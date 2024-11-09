@@ -2,9 +2,11 @@ package com.example.todolist;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +38,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.tvTitle.setText(task.getTitle());
         holder.tvLastEdited.setText("Last edited: " + task.getLastEdited());
-        holder.itemView.setOnClickListener(v -> onTaskClickListener.onTaskClick(task));
+
+        // Set priority dot color based on priority level
+        if (task.getPriority().equals("High")) {
+            holder.priorityDot.setColorFilter(Color.rgb(170,12,10));
+        } else if (task.getPriority().equals("Medium")) {
+            holder.priorityDot.setColorFilter(Color.rgb(255,121,0));
+        } else {
+            holder.priorityDot.setColorFilter(Color.rgb(52,176,121));
+        }
+        holder.itemView.setOnClickListener(view -> {
+            onTaskClickListener.onTaskClick(task);
+        });
     }
 
     @Override
@@ -52,11 +65,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvLastEdited;
+        ImageView priorityDot;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTaskTitle);
             tvLastEdited = itemView.findViewById(R.id.tvLastEdited);
+            priorityDot = itemView.findViewById(R.id.priorityDot);
         }
     }
 }

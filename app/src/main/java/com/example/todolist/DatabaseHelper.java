@@ -15,6 +15,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_DETAILS = "details";
     private static final String COLUMN_LAST_EDITED = "last_edited";
+    private static final String COLUMN_PRIORITY = "priority";
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -26,7 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_TITLE + " TEXT, " +
                 COLUMN_DETAILS + " TEXT, " +
-                COLUMN_LAST_EDITED + " TEXT)";
+                COLUMN_LAST_EDITED + " TEXT, "+
+                COLUMN_PRIORITY + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -36,12 +39,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public long addTask(String title, String details, String lastEdited) {
+    public long addTask(String title, String details, String lastEdited, String priority) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_DETAILS, details);
         values.put(COLUMN_LAST_EDITED, lastEdited);
+        values.put(COLUMN_PRIORITY, priority);
         return db.insert(TABLE_TASKS, null, values);
     }
 
@@ -50,12 +54,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.query(TABLE_TASKS, null, null, null, null, null, COLUMN_LAST_EDITED + " DESC");
     }
 
-    public int updateTask(int id, String title, String details, String lastEdited) {
+    public int updateTask(int id, String title, String details, String lastEdited, String priority) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_DETAILS, details);
         values.put(COLUMN_LAST_EDITED, lastEdited);
+        values.put(COLUMN_PRIORITY, priority);
         return db.update(TABLE_TASKS, values, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
     }
 
@@ -71,8 +76,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE));
             String details = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DETAILS));
             String lastEdited = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LAST_EDITED));
+            String priority = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PRIORITY));
             cursor.close();
-            return new Task(id, title, details, lastEdited);
+            return new Task(id, title, details, lastEdited, priority);
         }
         return null;
     }

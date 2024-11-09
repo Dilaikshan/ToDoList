@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -63,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
                 String title = cursor.getString(cursor.getColumnIndexOrThrow("title"));
                 String details = cursor.getString(cursor.getColumnIndexOrThrow("details"));
                 String lastEdited = cursor.getString(cursor.getColumnIndexOrThrow("last_edited"));
-                taskList.add(new Task(id, title, details, lastEdited));
+                String priority = cursor.getString(cursor.getColumnIndexOrThrow("priority"));
+                Log.d("TaskPriority", "Task: " + title + ", Priority: " + priority); // Log statement
+
+                taskList.add(new Task(id, title, details, lastEdited, priority));
             } while (cursor.moveToNext());
             cursor.close();
         }
@@ -93,14 +99,22 @@ public class MainActivity extends AppCompatActivity {
         EditText etTaskTitle = popupView.findViewById(R.id.etTaskTitle);
         EditText etTaskDescription = popupView.findViewById(R.id.etTaskDescription);
         Button btnSaveTask = popupView.findViewById(R.id.btnSaveTask);
+        Spinner prioritySpinner = popupView.findViewById(R.id.spinner_priority);  // Initialize from popupView
+
+        // Set up the spinner with priority levels
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.priority_levels, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        prioritySpinner.setAdapter(adapter);
 
         btnSaveTask.setOnClickListener(view -> {
             String title = etTaskTitle.getText().toString().trim();
             String details = etTaskDescription.getText().toString().trim();
+            String selectedPriority = prioritySpinner.getSelectedItem().toString().trim();
             String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
             if (!title.isEmpty()) {
-                long result = databaseHelper.addTask(title, details, currentDate);
+                long result = databaseHelper.addTask(title, details, currentDate, selectedPriority);
                 if (result != -1) {
                     Toast.makeText(MainActivity.this, "Task Added", Toast.LENGTH_SHORT).show();
                     loadTasksFromDatabase(); // Refresh task list
@@ -112,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Title cannot be empty", Toast.LENGTH_SHORT).show();
             }
         });
+
         dialog.show();
     }
+
 
 
     @Override

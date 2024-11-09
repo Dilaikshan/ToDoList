@@ -2,10 +2,13 @@ package com.example.todolist;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private EditText etTaskDetails;
     private TextView tvTaskTitle, tvLastEdited;
     private DatabaseHelper databaseHelper;
+    private Spinner spinnerPriority;
     private Task task;
 
     @SuppressLint("MissingInflatedId")
@@ -47,6 +51,21 @@ public class TaskDetailsActivity extends AppCompatActivity {
             etTaskDetails.setText(task.getDetails());
             tvLastEdited.setText("Last Edited: " + task.getLastEdited());
         }
+
+        // Set up Spinner for priority levels
+        spinnerPriority = findViewById(R.id.spinnerPriority);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.priority_levels, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPriority.setAdapter(adapter);
+
+        // Set spinner selection based on task priority
+        if (task != null) {
+            String priority = task.getPriority();
+            int position = adapter.getPosition(priority);
+            spinnerPriority.setSelection(position);
+        }
+
 
         // Back button logic to save updates
         btnBack.setOnClickListener(v -> {
@@ -83,7 +102,9 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private void updateTaskDetails() {
         String updatedDetails = etTaskDetails.getText().toString().trim();
         String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-        databaseHelper.updateTask(task.getId(), task.getTitle(), updatedDetails, currentDate);
+        // Get the selected priority from the spinner
+        String selectedPriority = spinnerPriority.getSelectedItem().toString();
+        databaseHelper.updateTask(task.getId(), task.getTitle(), updatedDetails, currentDate, selectedPriority);
         Toast.makeText(this, "Changes saved", Toast.LENGTH_SHORT).show();
     }
 }

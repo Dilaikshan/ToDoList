@@ -5,4 +5,5 @@
     <color name="primaryColor">#4B854C</color>
     <color name="hintTextColor">#555555</color>
     <color name="dateColor">#888888</color>
+    <color name="HIGH">#C51C1C</color>
 </resources>

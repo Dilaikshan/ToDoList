@@ -37,6 +37,26 @@
         android:textColorHint="#888888"
         tools:ignore="Autofill" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/label_priority"
+        android:text="Select the Priority:"
+        android:textSize="18sp"
+
+        android:layout_below="@id/etTaskDescription"
+        />
+    <Spinner
+        android:id="@+id/spinner_priority"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:padding="8dp"
+
+        android:tooltipText="Prirority"
+        android:background="#DDDDDD"
+        android:layout_below="@id/label_priority"
+        android:entries="@array/priority_levels"/>
+
     <Button
         android:id="@+id/btnSaveTask"
         android:layout_width="wrap_content"
@@ -45,7 +65,8 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:padding="12dp"
-        android:layout_below="@+id/etTaskDescription"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/spinner_priority"
         android:layout_alignParentEnd="true"
         android:backgroundTint="@color/primaryColor"
         android:textColor="@android:color/white"
