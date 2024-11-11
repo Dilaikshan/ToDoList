@@ -33,7 +33,7 @@
 
     <EditText
         android:id="@+id/etTaskDetails"
-        android:inputType="text"
+
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:autofillHints="@string/task_body_view"
